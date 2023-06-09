@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!--
+        Para Comunicaciones 2023 en la UTN FRVM.
+
+        Iba a inicialmente hacer esto en Node + Typescript, pero es demasiado para la simpleza del proyecto.
+        Asique lo hago con HTML + JS puro, y un poquito de Tailwind para darle más color jejeje.
+
+        Hecho por Lucas Maza (@punteroo).
+    -->
+    <title>Communications Encoder</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://cdn.plot.ly/plotly-2.20.0.min.js"
+      charset="utf-8"
+    ></script>
+  </head>
+
+  <body>
+    <!-- Configuration -->
+    <div class="p-6 grid grid-cols-4 w-full gap-2">
+      <div class="col-span-2">
+        <div class="bg-slate-200 rounded-xl p-2">
+          <h1 class="font-bold text-xl">Configuración</h1>
+          <div class="p-2 w-full">
+            <p>Secuencia de Bits</p>
+            <span class="text-xs" id="bit-sequence-decimal">DEC: 1589264</span>
+            <span class="text-xs" id="bit-sequence-hex">HEX: 184010</span>
+            <input
+              class="w-full"
+              id="bit-sequence-input"
+              type="text"
+              value="1100001000000000100000"
+            />
+
+            <p>Tipo de Codificación</p>
+            <select id="bit-sequence-encoding">
+              <option disabled selected value>
+                -- Seleccione una opción --
+              </option>
+              <optgroup label="NRZ & RZ">
+                <option value="NRZL">NRZ-L</option>
+                <option value="NRZI">NRZ-I</option>
+                <option value="RZ">RZ</option>
+              </optgroup>
+              <optgroup label="Manchester">
+                <option value="MANCH">Manchester</option>
+                <option value="MANCHD">Manchester Diferencial</option>
+              </optgroup>
+              <optgroup label="AMI">
+                <option value="AMI">AMI</option>
+                <option value="PSEUDO">Pseudoternario</option>
+              </optgroup>
+              <optgroup label="AMI c/ Corrección">
+                <option value="B8ZS">B8ZS</option>
+                <option value="HDB3">HDB3</option>
+              </optgroup>
+              <option value="MLT3">MLT-3</option>
+            </select>
+
+            <button class="bg-slate-300 w-full font-bold mt-2" id="encode">
+              Encodear
+            </button>
+          </div>
+        </div>
+        <div class="bg-slate-200 rounded-xl p-2 mt-4">
+          <p id="encoding-desc">
+            Cuando seleccione un tipo de codificación, mostraré una explicación
+            de mi entendimiento de ese tipo de codificación.
+          </p>
+        </div>
+      </div>
+
+      <!-- Rendering -->
+      <div class="col-span-2">
+        <div class="bg-slate-200 rounded-xl p-2">
+          <h1 class="font-bold text-xl">Renderizado de Señal</h1>
+          <div id="bit-sequence-plot" class="w-full h-full"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="fixed inset-x-0 bottom-0">
+      <div class="p-6">
+        <p class="text-center text-xs">
+          Hecho por <b>Lucas Maza Bianchi</b> (<a class="text-blue-700" href="https://github.com/punteroo/com-2023-encoding" target="_blank">@punteroo</a>) para <b>Comunicaciones 2023</b> UTN FRVM.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script/dom.validator.js"></script>
+    <script src="script/encoder.js"></script>
+
+    <script>
+      // Detect for user input and create a new encoder instance.
+      document.getElementById("encode").addEventListener("click", (e) => {
+        // Fetch selection information.
+        const bitSequence = document.getElementById("bit-sequence-input"),
+          bitSequenceEncoding = document.getElementById(
+            "bit-sequence-encoding"
+          );
+
+        // Are they empty?
+        if (
+          bitSequence.value.length === 0 ||
+          bitSequenceEncoding.value.length === 0
+        ) {
+          alert(
+            "Por favor, ingrese una secuencia de bits y un tipo de codificación."
+          );
+          return;
+        }
+
+        // Now we can create the encoder.
+        const encoder = new Encoder(bitSequenceEncoding.value);
+
+        // Encode the bit sequence.
+        const plot = encoder.encode(bitSequence.value);
+
+        // Render the plot.
+        Plotly.newPlot(
+          "bit-sequence-plot",
+          [
+            {
+              ...plot,
+              mode: "lines",
+            },
+          ],
+          {
+            title: `Señal Digital Codificada (${bitSequenceEncoding.value})`,
+            staticPlot: true,
+            displayModeBar: false,
+            xaxis: {
+              dtick: 1.0,
+              tick0: 0,
+            },
+          }
+        );
+      });
+    </script>
+  </body>
+</html>
