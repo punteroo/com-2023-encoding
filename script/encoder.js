@@ -1,5 +1,6 @@
 /** Encoding type names to match against. */
 const ENCODING_NAMES = {
+  NRZ: {},
   NRZL: {},
   NRZI: {},
   RZ: {},
@@ -36,6 +37,8 @@ class Encoder {
    */
   encode(bitSequence) {
     switch (this.encoding) {
+      case "NRZ":
+        return this.generateNRZPlotPoints(bitSequence);
       case "NRZL":
         return this.generateNRZLPlotPoints(bitSequence);
       case "NRZI":
@@ -59,6 +62,30 @@ class Encoder {
     }
 
     return null;
+  }
+
+  /**
+   * Method that generates an encoded bit sequence (in NRZ) in the form of plot points.
+   *
+   * @param {string} bitSequence The bit sequence to encode.
+   *
+   * @returns {{ x: number[], y: number[]}} An array of plot points.
+   */
+  generateNRZPlotPoints(bitSequence) {
+    const x = [],
+      y = [];
+
+    // Iterate over the bit sequence.
+    for (let i = 0; i < bitSequence.length; i++) {
+      // Obtain the bit.
+      const bit = +bitSequence[i];
+
+      // NRZ simply encodes a 1 as a high voltage and a 0 as no voltage.
+      x.push(i, i + this.bitDurationSeconds);
+      y.push(bit ? 1 : 0, bit ? 1 : 0);
+    }
+
+    return { x, y };
   }
 
   /**

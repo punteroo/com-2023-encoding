@@ -41,6 +41,8 @@ document
     const element = document.getElementById("encoding-desc");
 
     switch (e.target.value) {
+      case "NRZ":
+        return (element.innerHTML = `<b>NRZ (Non-Return to Zero)</b> es la forma más simple de implementar codificación. Cada bit positivo es un voltaje positivo (o negativo) y el bit 0 es ausencia de voltaje. Por esto es unipolar. Este esquema de codificación tiene <b>muchos problemas de componente continua</b> simplemente por su naturaleza de funcionamiento.`);
       case "NRZL":
         return (element.innerHTML = `El <b>Non-Return To Zero</b> que yo hice acá es bipolar (es decir, o es voltaje alto o voltaje bajo), pero se puede implementar de forma unipolar también. El NRZL es el más simple de implementar, pero es también el que mayor problemas de continuidad tiene, debido a que no tiene mucha alternancia (manda todo como si fuera el binario lógico literal en la señal), lo que puede producir problemas de desync entre el emisor y el receptor.`);
       case "NRZI":
