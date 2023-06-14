@@ -2,6 +2,8 @@
 
 Los valores de voltaje para los elementos de señal del esquema de codificación **8B6T** salen de una tabla pre-definida. Este pequeño sub-proyecto de Node se encarga de portar un CSV con estos valores para cada byte en números decimales con su representación en términos de voltaje (positivo, nulo, negativo) para ser utilizado en el proyecto principal luego.
 
+La tabla original fue obtenida desde [aquí](https://www.accessengineeringlibrary.com/content/book/9780073250328/back-matter/appendix4).
+
 ## Uso
 1. Instalar dependencias
 ```bash
