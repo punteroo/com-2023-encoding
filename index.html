@@ -43,24 +43,29 @@
               <option disabled selected value>
                 -- Seleccione una opción --
               </option>
-              <optgroup label="NRZ & RZ">
+              <optgroup label="Unipolar">
+                <option value="NRZ">NRZ</option>
+              </optgroup>
+              <optgroup label="Polar">
                 <option value="NRZL">NRZ-L</option>
                 <option value="NRZI">NRZ-I</option>
                 <option value="RZ">RZ</option>
-              </optgroup>
-              <optgroup label="Manchester">
                 <option value="MANCH">Manchester</option>
                 <option value="MANCHD">Manchester Diferencial</option>
               </optgroup>
-              <optgroup label="AMI">
+              <optgroup label="Bipolar">
                 <option value="AMI">AMI</option>
                 <option value="PSEUDO">Pseudoternario</option>
+                <option value="B8ZS">B8ZS (Ruptura de Código)</option>
+                <option value="HDB3">HDB3 (Ruptura de Código)</option>
               </optgroup>
-              <optgroup label="AMI c/ Corrección">
-                <option value="B8ZS">B8ZS</option>
-                <option value="HDB3">HDB3</option>
+              <optgroup label="Multinivel (mBnL)">
+                <option value="2B1Q">2B1Q</option>
+                <option value="8B6T">8B6T</option>
               </optgroup>
-              <option value="MLT3">MLT-3</option>
+              <optgroup label="Multitransmisión">
+                <option value="MLT3">MLT-3</option>
+              </optgroup>
             </select>
 
             <button class="bg-slate-300 w-full font-bold mt-2" id="encode">
@@ -88,7 +93,12 @@
     <footer class="fixed inset-x-0 bottom-0">
       <div class="p-6">
         <p class="text-center text-xs">
-          Hecho por <b>Lucas Maza Bianchi</b> (<a class="text-blue-700" href="https://github.com/punteroo/com-2023-encoding" target="_blank">@punteroo</a>) para <b>Comunicaciones 2023</b> UTN FRVM.
+          Hecho por <b>Lucas Maza Bianchi</b> (<a
+            class="text-blue-700"
+            href="https://github.com/punteroo/com-2023-encoding"
+            target="_blank"
+            >@punteroo</a
+          >) para <b>Comunicaciones 2023</b> UTN FRVM.
         </p>
       </div>
     </footer>
