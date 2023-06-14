@@ -27,10 +27,17 @@
       <div class="col-span-2">
         <div class="bg-slate-200 rounded-xl p-2">
           <h1 class="font-bold text-xl">Configuración</h1>
+          <p class="text-xs">
+            Si necesita convertir hexadecimal a binario, use la función
+            bytesToBits() en la consola de DevTools.
+          </p>
           <div class="p-2 w-full">
             <p>Secuencia de Bits</p>
             <span class="text-xs" id="bit-sequence-decimal">DEC: 1589264</span>
             <span class="text-xs" id="bit-sequence-hex">HEX: 184010</span>
+            <span class="text-xs" id="bit-sequence-amount"
+              >Amount Bits: 22</span
+            >
             <input
               class="w-full"
               id="bit-sequence-input"
@@ -126,31 +133,35 @@
           return;
         }
 
-        // Now we can create the encoder.
-        const encoder = new Encoder(bitSequenceEncoding.value);
+        try {
+          // Now we can create the encoder.
+          const encoder = new Encoder(bitSequenceEncoding.value);
 
-        // Encode the bit sequence.
-        const plot = encoder.encode(bitSequence.value);
+          // Encode the bit sequence.
+          const plot = encoder.encode(bitSequence.value);
 
-        // Render the plot.
-        Plotly.newPlot(
-          "bit-sequence-plot",
-          [
+          // Render the plot.
+          Plotly.newPlot(
+            "bit-sequence-plot",
+            [
+              {
+                ...plot,
+                mode: "lines",
+              },
+            ],
             {
-              ...plot,
-              mode: "lines",
-            },
-          ],
-          {
-            title: `Señal Digital Codificada (${bitSequenceEncoding.value})`,
-            staticPlot: true,
-            displayModeBar: false,
-            xaxis: {
-              dtick: 1.0,
-              tick0: 0,
-            },
-          }
-        );
+              title: `Señal Digital Codificada (${bitSequenceEncoding.value})`,
+              staticPlot: true,
+              displayModeBar: false,
+              xaxis: {
+                dtick: plot?.dtick ?? 1.0,
+                tick0: 0,
+              },
+            }
+          );
+        } catch (e) {
+          console.error(e);
+        }
       });
     </script>
   </body>

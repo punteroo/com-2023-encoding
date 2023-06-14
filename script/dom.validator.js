@@ -30,6 +30,10 @@ document
       .toString(16)
       .toUpperCase()}`;
 
+    document.getElementById(
+      "bit-sequence-amount"
+    ).innerHTML = `Amount Bits: ${target.value.length}`;
+
     return;
   });
 
@@ -63,5 +67,9 @@ document
         return (element.innerHTML = `Un sub-tipo validador de AMI. Introduce alternancia buscando la repetición de los bits nulos (0), y cuando encuentra una secuencia de 4 bits nulos, los reemplaza por una secuencia de 4 bits en un patrón definido.<br/>Al encontrar 4 bits consecutivos en 0, aplica el patrón <b>000V</b>, donde <b>V</b> es una violación del código de AMI.<br/>Este tiene una particularidad, que es la distinción entre <b>par</b> e <b>impar</b>. Este conteo de paridad se da dependiendo de <i>cuantos pulsos pasaron desde la última vez que ocurrió una ruptura de código</i>. Dependiendo de este conteo:<ul><li>Si es par, el patrón es <b>B00V</b></li><li>Si es impar, el patrón es <b>000V</b></li></ul>`);
       case "MLT3":
         return (element.innerHTML = `Este tipo de codificación tiene problemas de continuidad, y se debe a que, si bien es algo extraño en comparación al resto de los otros tipos de codificación, este <b>oscila</b> entre 2 polaridades y no transmitir nada para representar los bits. Cada vez que existe un <b>1</b>, se oscilará a un valor de voltaje (V<sub>+</sub>, V<sub>0</sub> o V<sub>-</sub>) lo que lo transforma en una codificación <b>multi-polar</b>. Los bits en 0 mantendrán el último voltaje utilizado.`);
+      case "2B1Q":
+        return (element.innerHTML = `<b>2B1Q</b> forma parte de los esquemas de codificación más usados de <b>mBnL</b>. Es un esquema de codificación binario de 2 elementos de dato en 1 elemento de señal. Algo importante de los esquemas <b>mBnL</b> es la existencia del concepto de pesos; cada elemento de dato representado tiene un peso con respecto al voltaje (combinación de voltajes) que transmite, se debe <b>equilibrar</b> cada uno al momento de trascenderlos utilizando la <b>inversión</b> de sus componentes con respecto al peso anterior obtenido.<img src="public/table_2b1q.jpg" />`);
+      case "8B6T":
+        return (element.innerHTML = `<b>8B6T</b>... Este si que es jodido. De la misma forma que 2B1Q lo hace con 2 bits por 1 elemento de señal transmitido, este hace 8 bits (1 byte) en 6 elementos de señal. Los valores de voltaje asignados a cada uno de los elementos de dato <b>salen de una tabla</b>, no son calculables, por ende en esta solución tuve que manualmente portar la tabla al esquema de codificación para poder implementarlo. Tiene 256 elementos de datos y 729 patrones posibles, por lo tanto una redundancia de 473 elementos de señal que no se utilizan para representar información, si no sincronizar relojes o detección de errores. De la misma forma que los esquemas <b>mBnL</b>, los pesos de cada patrón de señal importan y deben tenerse en cuenta para poder invertir las polaridades para el balanceo y equilibrio de la señal.<br/>Acá un ejemplo de como se puede ver una secuencia de bits en este esquema de codificación (mostrando la inversión). Dejo la secuencia de bits acá para que se pueda copiar en la caja de texto y probarlo: <b>000100010101001101010000</b><br/><img src="public/8B6T-encoding.jpg" />`);
     }
   });
