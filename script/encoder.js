@@ -210,11 +210,12 @@ class Encoder {
       console.log(lastBitWeight, elementWeight, encoding);
 
       // If the element weight is 0 or opposite, then no effect is applied.
-      if (elementWeight === lastBitWeight && lastBitWeight !== 0)
+      const needsInversion = elementWeight === lastBitWeight && lastBitWeight !== 0;
+      if (needsInversion)
         encoding = encoding.map((e) => -e);
 
       // Declare the last bit weight (can be 0, -1 or 1)
-      lastBitWeight = elementWeight;
+      lastBitWeight = needsInversion ? -elementWeight : elementWeight;
 
       // Add the plot points.
       for (let j = 0; j < encoding.length; j++) {
