@@ -1,0 +1,14 @@
+{
+  "name": "8b6t-parse",
+  "version": "1.0.0",
+  "description": "Parses the CSV holding all the encodings for 8B6T into an encodings pattern for the project.",
+  "main": "index.js",
+  "scripts": {
+    "convert": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parser": "^3.0.0"
+  }
+}
