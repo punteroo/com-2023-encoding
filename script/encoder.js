@@ -133,9 +133,9 @@ class Encoder {
       const bit = +bitSequence[i];
 
       // Alternate the flag value based on memory.
-      flag = bit ? (flag ? 0 : 1) : flag;
+      flag = bit ? (flag == 1 ? -1 : 1) : flag;
 
-      // NRZI encodes a 1 as an alternating sequence, whereas 0 is the constant voltage.
+      // NRZI encodes a 1 as an alternating sequence, whereas 0 is a low voltage.
       // The voltage is held for the duration of the bit.
       x.push(i, i + this.bitDurationSeconds);
 
