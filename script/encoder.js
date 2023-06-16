@@ -355,8 +355,8 @@ class Encoder {
 
     // Manchester takes a pattern for a bit, and inverts the pattern for the other bit.
     // The voltage is held for the duration of the bit. Let's define the pattern for a 1.
-    const pattern1 = [1, 1, 0, 0],
-      pattern0 = [0, 0, 1, 1];
+    const pattern1 = [1, 1, -1, -1],
+      pattern0 = [-1, -1, 1, 1];
 
     // Iterate over the bit sequence.
     for (let i = 0; i < bitSequence.length; i++) {
@@ -389,7 +389,7 @@ class Encoder {
     // Differential Manchester is similar to Manchester, however it implements inversion.
     // If we have a 1, we invert the pattern. If we have a 0, we keep the pattern.
     // We implement the usage then of a flag pattern.
-    const pattern = [0, 0, 1, 1];
+    const pattern = [-1, -1, 1, 1];
 
     // Create a flag that keeps track of the last bit voltage.
     let flag = 1;
